@@ -1,0 +1,101 @@
+@startuml
+class Mastermind {
+- Board board
++ play()
++ main()
+}
+
+
+
+class IO{
+}
+
+
+
+
+class Board{
+- boolean playAgain
+- Attempt[] attempts
+- Secret secret
+- Proposed proposed
++ getCountAttempts()
++ userAttemptProposed()
++ compareCurrentAttempt()
+}
+
+
+
+
+class Secret{
++ setRandom()
++ getAsterisks()
+}
+
+
+
+
+
+class Proposed{
++setCombination()
+}
+
+
+
+class Combination{
+- Color ColorList[]
++ compare(Combination combination)
++ check()
++ show()
+}
+
+
+
+
+
+class Attempt
+{
+- Proposed proposed
+- Color pieceWhite
+- Color pieceBlack
++ Attempt(Proposed proposed)
++ showWhites()
++ showBlacks()
+}
+
+
+
+
+
+
+
+Enum Color{
+RED
+BLUE
+YELLOW
+ORANGE
+PINK
+GREEN
+}
+
+
+
+
+Mastermind *-down-> Board
+  
+Board *-down-> "0 . 10" Attempt
+Board *-down-> Secret
+Board ..> IO
+Board --> Proposed
+
+Secret -up-^ Combination
+Secret -down-> Attempt
+
+Proposed -up-^ Combination
+Proposed ..> IO
+Proposed --> Attempt
+
+
+Combination -down-> Color
+
+
+@enduml
