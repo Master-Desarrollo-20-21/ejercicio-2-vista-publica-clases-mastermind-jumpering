@@ -1,8 +1,9 @@
 @startuml
 class Mastermind {
-- Board board
-+ play()
-+ main()
+- board : Board
++ play() : void
++ main() : void
+- isResumed()
 }
 
 
@@ -12,59 +13,56 @@ class IO{
 
 
 
-
 class Board{
-- boolean playAgain
-- Attempt[] attempts
-- Secret secret
-- Proposed proposed
-+ getCountAttempts()
-+ userAttemptProposed()
-+ compareCurrentAttempt()
+- results : Result[]
+- secret : Secret
+- proposed : Proposed
+- countResults : int
+- win : boolean
++ show() :void
++ countToZero() : void
+- tryProposedResult() : void
+- printResult() :void
 }
-
 
 
 
 class Secret{
-+ setRandom()
-+ getAsterisks()
++ getRandom() : Combination
++ getAsterisks() : void
 }
 
 
 
-
-
 class Proposed{
-+setCombination()
+- userInput : String
+- PATTERN : Pattern
+- checkIntegrity() : boolean
+- isCorrectLength() : boolean
+- isCharColors() : boolean
+- isUniqueChars() : boolean
 }
 
 
 
 class Combination{
-- Color ColorList[]
-+ compare(Combination combination)
-+ check()
-+ show()
+- colorList : ArrayList<Color>
+# show() : void
+# size() : int
 }
 
 
 
-
-
-class Attempt
+class Result
 {
-- Proposed proposed
-- Color pieceWhite
-- Color pieceBlack
-+ Attempt(Proposed proposed)
-+ showWhites()
-+ showBlacks()
+- proposed : Proposed
+- secret : Secret
+- piecesBlack : int
+- piecesWhite : int
++ Result(Proposed proposed)
++ showResult() : void
++ numberOfBlackPieces() : int
 }
-
-
-
-
 
 
 
@@ -75,27 +73,20 @@ YELLOW
 ORANGE
 PINK
 GREEN
++ getKeyword() : int
++ {static} valueOf() : Color
 }
 
 
-
-
 Mastermind *-down-> Board
-  
-Board *-down-> "0 . 10" Attempt
+Board *-down-> "0 . 10" Result
 Board *-down-> Secret
 Board ..> IO
-Board --> Proposed
-
+Board o--> Proposed
 Secret -up-^ Combination
-Secret -down-> Attempt
-
+Secret -down-> Result
 Proposed -up-^ Combination
 Proposed ..> IO
-Proposed --> Attempt
-
-
+Proposed --> Result
 Combination -down-> Color
-
-
 @enduml
