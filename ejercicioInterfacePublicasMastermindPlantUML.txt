@@ -14,27 +14,24 @@ class IO{
 
 
 class Board{
-- results : Result[]
+- resultList : List<Result>
 - secret : Secret
-- proposed : Proposed
-- countResults : int
-- win : boolean
-+ show() :void
-+ countToZero() : void
-- tryProposedResult() : void
-- printResult() :void
+- counResults : int
+- {static} ATTEMPTS : int
++ play() : void
++ showAllResults() :void
 }
 
 
 
 class Secret{
 + getRandom() : Combination
-+ getAsterisks() : void
++ showAsterisks() : void
 }
 
 
 
-class Proposed{
+class ProposedCombination{
 - userInput : String
 - PATTERN : Pattern
 - checkIntegrity() : boolean
@@ -55,11 +52,11 @@ class Combination{
 
 class Result
 {
-- proposed : Proposed
+- proposedCombination : ProposedCombination
 - secret : Secret
 - piecesBlack : int
 - piecesWhite : int
-+ Result(Proposed proposed)
++ Result(ProposedCombination proposedCombination)
 + showResult() : void
 + numberOfBlackPieces() : int
 }
@@ -82,11 +79,11 @@ Mastermind *-down-> Board
 Board *-down-> "0 . 10" Result
 Board *-down-> Secret
 Board ..> IO
-Board o--> Proposed
+Board o--> ProposedCombination
 Secret -up-^ Combination
 Secret -down-> Result
-Proposed -up-^ Combination
-Proposed ..> IO
-Proposed --> Result
+ProposedCombination -up-^ Combination
+ProposedCombination ..> IO
+ProposedCombination --> Result
 Combination -down-> Color
 @enduml
